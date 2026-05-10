@@ -1,0 +1,46 @@
+Exp2(VHDL)
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity alu is
+	port(A: in STD_LOGIC_VECTOR(1 downto 0);
+		  B: in STD_LOGIC_VECTOR(1 downto 0);
+		  op_sel: in STD_LOGIC_VECTOR(1 downto 0);
+		  result: out STD_LOGIC_VECTOR(1 downto 0);
+		  carry: out STD_LOGIC);
+end alu;
+
+architecture Behavioral of alu is
+begin
+	process(A, B, op_sel)
+	begin
+		if op_sel = "00" then		   -- ADD
+			result <= A+B;
+			if(A+B) > "11" then
+				carry <= '1';
+			else
+				carry <= '0';
+			end if;
+		
+		elsif op_sel = "01" then		-- SUB
+			result <= A-B;
+			if A < B then
+				carry <='1';
+			else
+				carry <= '0';				-- borrow
+			end if;
+			
+		elsif op_sel = "10" then		--AND
+			result <= A and B;
+			carry <='0';
+			
+		elsif op_sel ="11" then 		-- OR
+			result <= A or B ;
+			carry <= '0';
+		end if;
+	
+	end process;
+end Behavioral;

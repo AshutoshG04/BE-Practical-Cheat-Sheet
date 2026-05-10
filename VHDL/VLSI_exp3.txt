@@ -1,0 +1,17 @@
+EXP3(verilog)
+
+module parity_generator (
+    input [3:0] data,      // 4-bit input data
+    output reg even_parity,    // Even parity bit
+    output reg odd_parity      // Odd parity bit
+);
+
+    always @(*) begin
+        // Even parity: XOR all bits together (0 if even number of 1s, 1 if odd number of 1s)
+        even_parity = data[3] ^ data[2] ^ data[1] ^ data[0];
+        
+        // Odd parity: Complement of even parity
+        odd_parity = ~even_parity;
+    end
+
+endmodule
